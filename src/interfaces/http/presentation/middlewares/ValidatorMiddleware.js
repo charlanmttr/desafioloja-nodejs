@@ -12,13 +12,15 @@ module.exports = () => ({
                 }
                 const { error, value } = validation[validationKey].validate(req[validationKey], schemaOptions);
 
-                if (error)
+                if (error) {
                     throw exception.badRequest(
                         error.details.map(detail => ({
                             message: detail.message,
+                            keys: detail.type,
                             path: detail.path
                         }))
                     );
+                }
 
                 req[validationKey] = value;
             });

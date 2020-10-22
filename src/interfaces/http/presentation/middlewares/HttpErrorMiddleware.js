@@ -16,7 +16,7 @@ module.exports = ({ container }) => (err, req, res, next) => {
     const errorCustom = {
         message: err.message || httpConstants.message.INTERNAL_SERVER_ERROR,
         status_code: statusCode,
-        error_code: errorCode,
+        // error_code: errorCode,
         details: err.details || []
     };
     return res.status(statusCode).json(Object.assign(errorCustom, options));

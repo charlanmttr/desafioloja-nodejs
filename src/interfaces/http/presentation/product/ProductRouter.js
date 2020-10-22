@@ -37,7 +37,7 @@ module.exports = ({ container }) => {
             method: 'get',
             path: '/search',
             validation: {
-                // query: ctx.productSchema.query
+                query: ctx.productSchema.querySchema
             },
             handler: ctx.productController.searchProduct
         },
