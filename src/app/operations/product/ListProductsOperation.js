@@ -1,3 +1,3 @@
 module.exports = ({ productService }) => ({
-    execute: async () => await productService.listProducts()
+    execute: async () => await productService.list()
 });

@@ -1,9 +1,9 @@
 module.exports = ({ productRepository }) => ({
-    createProduct: async (data) => {
-        return await productRepository.createProduct(data);
+    create: async (data) => {
+        return await productRepository.create(data);
     },
 
-    listProducts: async () => {
-        return await productRepository.listProducts();
+    list: async () => {
+        return await productRepository.findPaginated({});
     }
 });

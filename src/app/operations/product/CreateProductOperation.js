@@ -1,3 +1,3 @@
 module.exports = ({ productService }) => ({
-    execute: async body => await productService.createProduct(body)
+    execute: async body => await productService.create(body)
 });
