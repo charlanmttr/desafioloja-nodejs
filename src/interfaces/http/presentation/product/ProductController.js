@@ -9,5 +9,10 @@ module.exports = opts => ({
     listProducts: AsyncMiddleware(async ctx => {
         const response = await opts.listProductsOperation.execute();
         return ctx.res.status(opts.httpConstants.code.CREATED).json(response);
+    }),
+
+    searchProduct: AsyncMiddleware(async ctx => {
+        const response = await opts.searchProductsOperation.execute(ctx.query);
+        return ctx.res.status(opts.httpConstants.code.CREATED).json(response);
     })
 });

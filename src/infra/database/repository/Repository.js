@@ -110,7 +110,7 @@ class Repository {
         limit = 100,
         query = {},
         clearQuery = true
-        }
+    }
     ) {
         if (clearQuery) clear(query);
 
