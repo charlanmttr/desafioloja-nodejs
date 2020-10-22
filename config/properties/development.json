@@ -1,0 +1,35 @@
+{
+    "serviceName": "archref-node",
+    "db": {
+        "username": "admin",
+        "password": "admin",
+        "database": "archref-node",
+        "servers": [
+            "127.0.0.1:27017"
+        ],
+        "dialect": "mongodb",
+        "logging": "",
+        "options": {
+            "authSource": "admin",
+            "replicaSet": ""
+        }
+    },
+    "web": {
+        "port": 4000
+    },
+    "integration": {
+        "rest": {
+            "cepClientMs": {
+                "baseUrl": "https://viacep.com.br",
+                "timeout": 10000,
+                "rejectUnauthorized": false
+            }
+        }
+    },
+    "hateoas": {
+        "domain": "https://localhost:4000/"
+    },
+    "stackError": {
+        "isVisible": true
+    }
+}
