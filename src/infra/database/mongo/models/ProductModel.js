@@ -5,27 +5,28 @@ const paginate = require('mongoose-paginate-v2');
 module.exports = ({ providerConnection }) => {
     const connection = providerConnection.connection;
 
-    const userSchema = new Schema({
+    const productSchema = new Schema({
         name: {
             type: String,
             required: true
         },
-        email: {
-            type: String,
+        valueUnitary: {
+            type: Number,
             required: true
         },
-        birth_date: {
-            type: String,
-            required: false
+        amount: {
+            type: Number,
+            required: true
         }
+
     }, { versionKey: false });
 
-    userSchema.plugin(paginate);
+    productSchema.plugin(paginate);
 
-    userSchema.index(
+    productSchema.index(
         { id: false },
         { unique: true }
     );
 
-    return connection.model('user', userSchema);
+    return connection.model('product', productSchema);
 };

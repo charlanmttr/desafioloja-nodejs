@@ -22,7 +22,7 @@ module.exports = ({
         .use(bodyParser.json())
         .use(compression())
         .use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerJsdoc(swaggerOptions)))
-        .use('/api/users', container.cradle.routerRegister.register(container.cradle.userRouter))
+        .use('/api/products', container.cradle.routerRegister.register(container.cradle.productRouter))
         .use((req, res, next) => { next(exception.notFound()); })
         .use(httpErrorMiddleware);
 

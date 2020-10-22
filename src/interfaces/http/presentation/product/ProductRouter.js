@@ -4,16 +4,16 @@ module.exports = ({ container }) => {
     return [
         /**
          * @swagger
-         *  users/:
+         *  products/:
          *   post:
          *      tags:
-         *          - User
-         *      summary: This should create users.
+         *          - Product
+         *      summary: This should create products.
          *      consumes:
          *        - application/json
          *      responses:
          *        200:
-         *          description: User return with success.
+         *          description: Product return with success.
          *        400:
          *          description: Bad Request.
          */
@@ -21,9 +21,16 @@ module.exports = ({ container }) => {
             method: 'post',
             path: '/',
             validation: {
-                body: ctx.userSchema.create,
+                body: ctx.productSchema.create,
             },
-            handler: ctx.userController.createUser
+            handler: ctx.productController.createProduct
+        },
+
+        {
+            method: 'get',
+            path: '/',
+            validation: {},
+            handler: ctx.productController.listProducts
         },
     ];
 };
