@@ -10,6 +10,10 @@ module.exports = ({ productRepository }) => ({
     search: async (finalQuery) => {
         console.log(finalQuery);
 
-        return await productRepository.findPaginated({query: finalQuery});
-    }
+        return await productRepository.findPaginated({ query: finalQuery });
+    },
+
+    find: async (_id) => {
+        return await productRepository.get({_id});
+    },
 });

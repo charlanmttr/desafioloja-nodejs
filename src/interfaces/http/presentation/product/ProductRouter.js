@@ -41,5 +41,14 @@ module.exports = ({ container }) => {
             },
             handler: ctx.productController.searchProduct
         },
+        {
+            method: 'get',
+            path: '/:id',
+            validation: {
+                params: ctx.productSchema.validateId
+            },
+            handler: ctx.productController.findProduct
+        },
+
     ];
 };

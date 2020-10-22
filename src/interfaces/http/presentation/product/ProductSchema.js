@@ -18,4 +18,14 @@ module.exports = () => ({
             .messages({ 'number.base': '`max_price` must be a number' }),
     }).or('min_price', 'max_price')
         .messages({ 'object.missing': 'Must contain at least one field on query' }),
+
+    validateId: joi.object().keys({
+        id: joi.string()
+            .regex(/^[0-9a-fA-F]{24}$/)
+            .messages({
+                'string.pattern.base': 'ID need be a valid ObjectID',
+                'any.required': 'ID params is required'
+            })
+    })
+
 });

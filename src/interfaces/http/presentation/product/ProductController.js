@@ -8,11 +8,16 @@ module.exports = opts => ({
 
     listProducts: AsyncMiddleware(async ctx => {
         const response = await opts.listProductsOperation.execute();
-        return ctx.res.status(opts.httpConstants.code.CREATED).json(response);
+        return ctx.res.status(opts.httpConstants.code.OK).json(response);
     }),
 
     searchProduct: AsyncMiddleware(async ctx => {
         const response = await opts.searchProductsOperation.execute(ctx.query);
-        return ctx.res.status(opts.httpConstants.code.CREATED).json(response);
+        return ctx.res.status(opts.httpConstants.code.OK).json(response);
+    }),
+
+    findProduct: AsyncMiddleware(async ctx => {
+        const response = await opts.findProductOperation.execute(ctx.params);
+        return ctx.res.status(opts.httpConstants.code.OK).json(response);
     })
 });
