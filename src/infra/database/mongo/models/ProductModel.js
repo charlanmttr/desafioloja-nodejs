@@ -17,6 +17,18 @@ module.exports = ({ providerConnection }) => {
         amount: {
             type: Number,
             required: true
+        },
+        lastSell: {
+            date: {
+                type: Date,
+                required: false,
+                default: null
+            },
+            value: {
+                type: Number,
+                required: false,
+                default: null
+            },
         }
 
     }, { versionKey: false });
