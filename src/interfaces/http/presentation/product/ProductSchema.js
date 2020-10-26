@@ -13,11 +13,30 @@ module.exports = () => ({
 
     querySchema: joi.object().keys({
         min_price: joi.number()
-            .messages({ 'number.base': '`min_price` must be a number' }),
+            .min(0)
+            .messages({
+                'number.base': '`min_price` must be a number',
+                'number.min': '`min_price` must be greater than or equal to 0'
+            }),
         max_price: joi.number()
-            .messages({ 'number.base': '`max_price` must be a number' }),
+            .min(0)
+            .messages({
+                'number.base': '`max_price` must be a number',
+                'number.min': '`max_price` must be greater than or equal to 0'
+            }),
     }).or('min_price', 'max_price')
-        .messages({ 'object.missing': 'Must contain at least one field on query' }),
+        .when(joi.object({
+            min_price: joi.exist(),
+            max_price: joi.exist()
+        }), {
+            then: joi.object({
+                max_price: joi.number().greater(joi.ref('min_price'))
+            }),
+        })
+        .messages({
+            'object.missing': 'Must contain at least one field on query',
+            'number.greater': '`max_price` must be greater than `min_price`'
+        }),
 
     validateId: joi.object().keys({
         id: joi.string()

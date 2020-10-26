@@ -23,11 +23,15 @@ module.exports = ({ providerConnection }) => {
         },
         value: {
             type: Number,
-            required: true
+            required: true,
+        },
+        installmentValue: {
+            type: Number,
+            required: false,
         },
         monthlyInterestRate: {
             type: Number,
-            required: true
+            required: false,
         }
     }, { versionKey: false });
 

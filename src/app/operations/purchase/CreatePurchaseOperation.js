@@ -1,4 +1,4 @@
-module.exports = ({ productService, logger }) => ({
+module.exports = ({ purchaseService, productService, purchaseFactory, logger }) => ({
     execute: async body => {
         try {
             const { product: productId,
@@ -22,19 +22,24 @@ module.exports = ({ productService, logger }) => ({
                 const amountToPay = dbValueUnitary - inputValue;
                 const rate = 2.05;
 
-                const totalToPay = amountToPay * (1 + (rate / 100)) ** numberOfInstallments;
-                const installmentValue = totalToPay / numberOfInstallments;
+                const amountWithInterest = amountToPay * (1 + (rate / 100)) ** numberOfInstallments;
+                const installmentValue = amountWithInterest / numberOfInstallments;
+                const totalToPay = amountWithInterest + inputValue;
 
-                console.log('O valor da primeira parcela será de', inputValue, ' e as', numberOfInstallments,
-                    'restantes serão no valor de ', installmentValue.toFixed(2),
-                    'reais. Resultando no total de', (totalToPay + inputValue).toFixed(2), 'reais.'
-                );
+                console.log(`COM JUROS: O valor da primeira parcela será de ${inputValue} e as ${numberOfInstallments} restantes serão no valor de ${installmentValue.toFixed(2)} reais. Resultando no total de ${totalToPay.toFixed(2)} reais.`);
 
+                let purchasePayload = purchaseFactory.toPurchaseDatabase(productId, inputValue, numberOfInstallments, installmentValue, totalToPay, rate);
+                
+                return purchaseService.create(purchasePayload);
             } else {
                 const amountToPay = dbValueUnitary - inputValue;
 
                 const installmentValue = amountToPay / numberOfInstallments;
-                console.log('O valor das parcelas será de ', installmentValue, 'reais.');
+                console.log(`SEM JUROS: O valor das parcelas será de ${installmentValue} reais.`);
+
+                let purchasePayload = purchaseFactory.toPurchaseDatabase(productId, inputValue, numberOfInstallments, installmentValue, dbValueUnitary);
+
+                return purchaseService.create(purchasePayload);
             }
 
         } catch (error) {
