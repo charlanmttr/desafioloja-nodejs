@@ -1,5 +1,5 @@
-const HttpConstants = require('../constants/HttpConstants')();
-const ErrorConstants = require('../constants/ErrorHandlerConstants')();
+const HttpConstants = require('src/interfaces/http/constants/HttpConstants')();
+const ErrorConstants = require('src/interfaces/http/constants/ErrorHandlerConstants')();
 
 const HttpErrors = class extends Error {
     constructor(error, statusCode, errorCode, isOperational = false) {

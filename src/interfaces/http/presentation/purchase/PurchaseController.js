@@ -1,4 +1,4 @@
-const AsyncMiddleware = require('src/interfaces/http/presentation/middlewares/AsyncMiddleware');
+const AsyncMiddleware = require('src/interfaces/http/middlewares/AsyncMiddleware');
 
 module.exports = opts => ({
     createPurchase: AsyncMiddleware(async ctx => {

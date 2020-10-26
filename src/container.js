@@ -11,23 +11,18 @@ const {
 const Server = require('./interfaces/http/Server');
 const Router = require('./interfaces/http/Router');
 const swaggerOptions = require('src/interfaces/http/swagger/SwaggerOptions');
+const logger = require('./interfaces/http/middlewares/logging/logger');
+const ErrorService = require('src/domain/services/ErrorService');
 
-const logger = require('./interfaces/http/presentation/middlewares/logging/logger');
-const HttpErrors = require('./interfaces/http/presentation/errors/HttpErrors');
+/* 
+    const HttpErrors = require('./interfaces/http/presentation/errors/HttpErrors');
+    exception: asValue(HttpErrors),
+*/
 
 const container = createContainer();
 
 const configureContainer = config => {
     container
-        .register({
-            server: asClass(Server).singleton(),
-            router: asFunction(Router),
-            logger: asFunction(logger).singleton(),
-            container: asValue(container),
-            config: asValue(config),
-            exception: asValue(HttpErrors),
-            swaggerOptions: asFunction(swaggerOptions),
-        })
         .loadModules(
             [
                 'src/infra/database/mongo/provider/**/*.js',
@@ -60,7 +55,16 @@ const configureContainer = config => {
                     injectionMode: InjectionMode.PROXY
                 }
             }
-        );
+        ).register({
+            server: asClass(Server).singleton(),
+            router: asFunction(Router),
+            logger: asFunction(logger).singleton(),
+            container: asValue(container),
+            config: asValue(config),
+            appCode: asValue(config.appCode),
+            exception: asValue(ErrorService),
+            swaggerOptions: asFunction(swaggerOptions),
+        });
     return container;
 };
 
