@@ -1,5 +1,7 @@
 # Logs
 *.log
+checklist.md
+yaml.yml
 
 # Node
 node_modules/

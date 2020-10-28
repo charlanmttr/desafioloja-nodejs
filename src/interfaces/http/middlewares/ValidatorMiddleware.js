@@ -5,7 +5,6 @@ module.exports = () => ({
             const { exception } = req.container.cradle;
             const schemaOptions = { abortEarly: false, convert: false, allowUnknown: true, stripUnknown};
 
-            
             Object.keys(validation).forEach(validationKey => {
                 const { error, value } = validation[validationKey].validate(req[validationKey], schemaOptions);
 

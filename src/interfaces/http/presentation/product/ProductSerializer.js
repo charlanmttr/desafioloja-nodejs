@@ -26,7 +26,7 @@ module.exports = () => ({
             return {
                 name: product.name,
                 amount: product.amount,
-                valueUnitary:product.valueUnitary,
+                valueUnitary: product.valueUnitary,
             };
         });
 
@@ -42,11 +42,13 @@ module.exports = () => ({
         name,
         valueUnitary,
         amount,
-    }){
+    }) {
         return {
-            name,
-            valueUnitary,
-            amount
+            product: {
+                name,
+                valueUnitary,
+                amount
+            }
         };
     }
 });
