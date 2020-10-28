@@ -22,7 +22,6 @@ module.exports = () => ({
         page,
         totalPages
     }) {
-
         const products = docs.map(product => {
             return {
                 name: product.name,
@@ -36,6 +35,18 @@ module.exports = () => ({
             totalProducts: totalDocs,
             page: page,
             totalPages: totalPages
+        };
+    },
+
+    create({
+        name,
+        valueUnitary,
+        amount,
+    }){
+        return {
+            name,
+            valueUnitary,
+            amount
         };
     }
 });

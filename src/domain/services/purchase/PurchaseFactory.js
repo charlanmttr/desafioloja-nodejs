@@ -7,9 +7,9 @@ module.exports = () => ({
         const amountWithInterest = amountToPay * (1 + (rate / 100)) ** numberOfInstallments;
         const installmentValue = amountWithInterest / numberOfInstallments;
         const totalToPay = amountWithInterest + inputValue;
-    
+
         console.log(`COM JUROS: O valor da primeira parcela será de ${inputValue} e as ${numberOfInstallments} restantes serão no valor de ${installmentValue.toFixed(2)} reais. Resultando no total de ${totalToPay.toFixed(2)} reais.`);
-    
+
         return {
             product,
             paymentCondition: {
@@ -36,6 +36,16 @@ module.exports = () => ({
             },
             installmentValue,
             value: dbValueUnitary
+        };
+    },
+
+    productsUpdate: (value) => {
+        return {
+            $inc: { amount: -1 },
+            $set: {
+                'lastSell.date': new Date(),
+                'lastSell.value': value
+            }
         };
     }
 });

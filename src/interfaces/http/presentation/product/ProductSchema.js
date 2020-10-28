@@ -36,7 +36,8 @@ module.exports = () => ({
         .messages({
             'object.missing': 'Must contain at least one field on query',
             'number.greater': '`max_price` must be greater than `min_price`'
-        }),
+        })
+        .strict(false),
 
     validateId: joi.object().keys({
         id: joi.string()

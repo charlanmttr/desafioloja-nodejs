@@ -16,4 +16,8 @@ module.exports = ({ productRepository }) => ({
     find: async (_id) => {
         return await productRepository.get({_id}, true);
     },
+
+    purchaseUpdate: async (_id, update) => {
+        return await productRepository.update({_id}, update);
+    }
 });

@@ -7,7 +7,7 @@ module.exports = opts => ({
         if (!response)
             return ctx.res.status(opts.httpConstants.code.BAD_REQUEST).json(response);
 
-        const product = opts.productSerializer.list(response);
+        const product = opts.productSerializer.create(response);
 
         return ctx.res.status(opts.httpConstants.code.CREATED).json(product);
     }),
