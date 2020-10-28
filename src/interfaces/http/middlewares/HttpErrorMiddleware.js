@@ -3,7 +3,12 @@
 module.exports = ({ container }) => (err, req, res, next) => {
     const { logger, config, httpConstants } = container.cradle;
 
-    logger.error(err);
+    const details = err.details.map(err => {
+        return {
+            message: err.message,
+            path: err.path
+        };
+    });
 
     const options =
         config.stackError && config.stackError.isVisible
@@ -17,7 +22,7 @@ module.exports = ({ container }) => (err, req, res, next) => {
         message: err.message || httpConstants.message.INTERNAL_SERVER_ERROR,
         status_code: statusCode,
         // error_code: errorCode,
-        details: err.details || []
+        details: details || []
     };
     return res.status(statusCode).json(Object.assign(errorCustom, options));
 };

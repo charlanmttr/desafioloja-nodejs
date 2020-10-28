@@ -25,6 +25,7 @@ const configureContainer = config => {
     container
         .loadModules(
             [
+                'src/app/operations/**/*.js',
                 'src/infra/database/mongo/provider/**/*.js',
                 [
                     'src/infra/database/mongo/provider/ProviderConnection.js',
@@ -40,7 +41,6 @@ const configureContainer = config => {
                     }
                 ],
                 'src/infra/database/repository/**/*.js',
-                'src/app/operations/**/*.js',
                 'src/app/services/**/*.js',
                 'src/domain/services/**/*.js',
                 'src/domain/schemas/**/*.js',
@@ -48,6 +48,7 @@ const configureContainer = config => {
                 'src/interfaces/http/constants/**/*.js',
                 'src/interfaces/http/middlewares/**/*.js',
                 'src/interfaces/http/presentation/**/*.js',
+                'src/interfaces/http/swagger/**/*.js',
             ],
             {
                 formatName: 'camelCase',
@@ -62,7 +63,7 @@ const configureContainer = config => {
             container: asValue(container),
             config: asValue(config),
             appCode: asValue(config.appCode),
-            exception: asValue(ErrorService),
+            exception: asClass(ErrorService),
             swaggerOptions: asFunction(swaggerOptions),
         });
     return container;
