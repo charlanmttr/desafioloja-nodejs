@@ -1,23 +1,46 @@
-module.exports = ({ productRepository }) => ({
+module.exports = ({ productRepository, logger }) => ({
     create: async (data) => {
-        return await productRepository.create(data);
+        try {
+            return await productRepository.create(data);
+        } catch (error) {
+            logger.error(error);
+            throw error;
+        }
     },
 
     list: async () => {
-        return await productRepository.findPaginated({});
+        try {
+            return await productRepository.findPaginated({});
+        } catch (error) {
+            logger.error(error);
+            throw error;
+        }
     },
 
     search: async (finalQuery) => {
-        // console.log(finalQuery);
-
-        return await productRepository.findPaginated({ query: finalQuery });
+        try {
+            return await productRepository.findPaginated({ query: finalQuery });
+        } catch (error) {
+            logger.error(error);
+            throw error;
+        }
     },
 
     find: async (_id) => {
-        return await productRepository.get({_id}, true);
+        try {
+            return await productRepository.get({ _id }, true); 
+        } catch (error) {
+            logger.error(error);
+            throw error;
+        }
     },
 
     purchaseUpdate: async (_id, update) => {
-        return await productRepository.update({_id}, update);
+        try {
+            return await productRepository.update({ _id }, update);
+        } catch (error) {
+            logger.error(error);
+            throw error;
+        }
     }
 });

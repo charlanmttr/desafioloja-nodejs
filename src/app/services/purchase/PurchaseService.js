@@ -1,5 +1,10 @@
-module.exports = ({ purchaseRepository }) => ({
+module.exports = ({ purchaseRepository, logger }) => ({
     create: async (data) => {
-        return await purchaseRepository.create(data);
+        try {
+            return await purchaseRepository.create(data);
+        } catch (error) {
+            logger.error(error);
+            throw error;
+        }
     }
 });

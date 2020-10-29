@@ -20,15 +20,20 @@ module.exports = ({ container }) => {
          *         name: "body"
          *         description: "Product object that needs to be added to the database"
          *         required: true
-         *         schema:
-         *           $ref: "#/definitions/BasicProduct"
+         *         type: object
+         *         properties:
+         *           product:
+         *             $ref: "#/definitions/BasicProduct"
          *       responses:
-         *          201:
-         *            description: Product created with success.
-         *            schema:
-         *              $ref: '#/definitions/BasicProduct'  
-         *          400:
-         *            description: Bad Request.
+         *         201:
+         *           description: Product created with success.
+         *           schema:
+         *             type: object
+         *             properties:
+         *               product:
+         *                 $ref: "#/definitions/BasicProduct"
+         *         400:
+         *           description: Bad Request.
          *     get:
          *       tags:
          *       - Product
@@ -42,7 +47,7 @@ module.exports = ({ container }) => {
          *           schema:
          *             $ref: '#/definitions/Products'
          *         204:
-         *           description: No content.
+         *           description: No content on database.
          *         400: 
          *           description: Bad Request.
          *   /products/search:
@@ -69,6 +74,10 @@ module.exports = ({ container }) => {
          *           description: Products list response.
          *           schema:
          *             $ref: '#/definitions/Products'
+         *         204:
+         *           description: No products matching the requested filter.
+         *         400:
+         *           description: Bad request.
          *   /products/{id}:
          *     get:
          *       tags:
@@ -78,16 +87,20 @@ module.exports = ({ container }) => {
          *       produces:
          *       - "application/json"
          *       parameters:
-         *       - name: "_id"
+         *       - name: "id"
          *         in: "path"
-         *         description: "product `Objectid` to be returned"
+         *         description: "`ObjectID` of the product to be returned."
          *         required: true
          *         type: "string"
          *       responses:
          *         200:
-         *           description: Products list response.
+         *           description: Product requested.
          *           schema:
          *             $ref: '#/definitions/CompleteProduct'  
+         *         204:
+         *           description: No products found with this ObjectID.
+         *         400:
+         *           description: Bad request.
          * definitions:
          *   BasicProduct:
          *     type: "object"

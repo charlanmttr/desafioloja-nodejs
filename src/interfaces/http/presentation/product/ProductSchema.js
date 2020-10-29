@@ -2,29 +2,31 @@ const joi = require('joi');
 
 module.exports = () => ({
     create: joi.object().keys({
-        name: joi.string()
-            .required()
-            .messages({
-                'any.required': '`name` is required'
-            }),
-        valueUnitary: joi.number()
-            .greater(0)
-            .required()
-            .messages({
-                'number.base': '`valueUnitary` must be a number',
-                'number.greater': '`valueUnitary` must be greater than 0',
-                'any.required': '`valueUnitary` is required'
-            }),
-        amount: joi.number()
-            .integer()
-            .min(1)
-            .required()
-            .messages({
-                'number.base': '`amount` must be a number',
-                'number.integer': '`amount` must be a integer number',
-                'number.min': '`amount` must be greater or equal than 1',
-                'any.required': '`amount` is required'
-            }),
+        product: joi.object().keys({
+            name: joi.string()
+                .required()
+                .messages({
+                    'any.required': '`name` is required'
+                }),
+            valueUnitary: joi.number()
+                .greater(0)
+                .required()
+                .messages({
+                    'number.base': '`valueUnitary` must be a number',
+                    'number.greater': '`valueUnitary` must be greater than 0',
+                    'any.required': '`valueUnitary` is required'
+                }),
+            amount: joi.number()
+                .integer()
+                .min(1)
+                .required()
+                .messages({
+                    'number.base': '`amount` must be a number',
+                    'number.integer': '`amount` must be a integer number',
+                    'number.min': '`amount` must be greater or equal than 1',
+                    'any.required': '`amount` is required'
+                }),
+        })
     }),
 
     querySchema: joi.object().keys({
