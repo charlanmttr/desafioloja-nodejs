@@ -21,10 +21,12 @@ module.exports = ({ container }) => {
          *         description: "Product object that needs to be added to the database"
          *         required: true
          *         schema:
-         *           $ref: "#/definitions/Product"
+         *           $ref: "#/definitions/BasicProduct"
          *       responses:
-         *          200:
-         *            description: Product return with success.
+         *          201:
+         *            description: Product created with success.
+         *            schema:
+         *              $ref: '#/definitions/BasicProduct'  
          *          400:
          *            description: Bad Request.
          *     get:
@@ -35,31 +37,14 @@ module.exports = ({ container }) => {
          *       produces:
          *       - applications/json
          *       responses: 
-         *          200:
-         *            description: Products list response.
-         *          204:
-         *            description: No content.
-         *          400: 
-         *            description: Bad Request.
-         * 
-         *   /products/{id}:
-         *     get:
-         *       tags:
-         *       - Product
-         *       summary: Get a Product by ID.
-         *       description: ""
-         *       produces:
-         *       - "application/json"
-         *       parameters:
-         *       - name: "_id"
-         *         in: "path"
-         *         description: "id of product to return"
-         *         required: true
-         *         type: "string"
-         *       responses:
-         *          200:
-         *            description: Products list response.
-         * 
+         *         200:
+         *           description: Products list response.
+         *           schema:
+         *             $ref: '#/definitions/Products'
+         *         204:
+         *           description: No content.
+         *         400: 
+         *           description: Bad Request.
          *   /products/search:
          *     get:
          *       tags:
@@ -82,21 +67,69 @@ module.exports = ({ container }) => {
          *       responses:
          *         200:
          *           description: Products list response.
+         *           schema:
+         *             $ref: '#/definitions/Products'
+         *   /products/{id}:
+         *     get:
+         *       tags:
+         *       - Product
+         *       summary: Get a product by ObjectID.
+         *       description: ""
+         *       produces:
+         *       - "application/json"
+         *       parameters:
+         *       - name: "_id"
+         *         in: "path"
+         *         description: "product `Objectid` to be returned"
+         *         required: true
+         *         type: "string"
+         *       responses:
+         *         200:
+         *           description: Products list response.
+         *           schema:
+         *             $ref: '#/definitions/CompleteProduct'  
          * definitions:
-         *   Product:
+         *   BasicProduct:
          *     type: "object"
-         *     required:
-         *     - "name"
-         *     - "valueUnitary"
-         *     - "amount"
          *     properties:
-         *     name:
+         *       name:
          *         type: "string"
-         *     valueUnitary:
-         *         type: "string"
-         *     amount:
+         *         required: true
+         *         example: "Celular"
+         *       valueUnitary:
+         *         type: "double"
+         *         required: true
+         *         example: 1500.99
+         *       amount:
          *         type: "integer"
-         */
+         *         required: true
+         *         example: 10
+         *   CompleteProduct:
+         *     allOf:
+         *       - $ref: '#/definitions/BasicProduct'
+         *       - type: "object"
+         *         properties:
+         *           lastSell:
+         *             type: "object"
+         *             properties:
+         *               data:
+         *                 type: "date"
+         *                 required: false
+         *                 default: null
+         *                 example: "2020-10-29T13:41:18.420Z"
+         *               value: 
+         *                 type: "double"
+         *                 required: false
+         *                 default: null
+         *                 example: 1270.20
+         *   Products:
+         *       type: "object"
+         *       properties:
+         *         products:
+         *           type: "array"
+         *           items:
+         *             $ref: '#/definitions/BasicProduct'
+         */           
         {
             method: 'post',
             path: '/',
