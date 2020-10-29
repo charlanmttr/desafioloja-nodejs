@@ -21,7 +21,7 @@ module.exports = ({ container }) => {
             method: 'post',
             path: '/',
             validation: {
-                // body: ctx.purchaseSchema.create,
+                body: ctx.purchaseSchema.create,
             },
             handler: ctx.purchaseController.createPurchase
         }
