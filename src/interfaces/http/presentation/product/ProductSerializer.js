@@ -1,3 +1,5 @@
+const moment = require('moment');
+
 module.exports = () => ({
 
     findById({
@@ -6,12 +8,19 @@ module.exports = () => ({
         valueUnitary,
         lastSell
     }) {
+
+        var date = lastSell.date ;
+        var convertedDate = moment(date).format('DD MMM yyyy HH:mm:ss');
+
         return {
             product: {
                 name,
                 amount,
                 valueUnitary,
-                lastSell
+                lastSell:{
+                    date: convertedDate,
+                    value: lastSell.value
+                }
             }
         };
     },

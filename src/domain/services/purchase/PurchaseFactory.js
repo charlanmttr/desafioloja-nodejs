@@ -17,8 +17,8 @@ module.exports = () => ({
                 numberOfInstallments
             },
             monthlyInterestRate: rate,
-            installmentValue,
-            value: totalToPay
+            installmentValue: parseFloat(installmentValue.toFixed(2)),
+            value: parseFloat(totalToPay.toFixed(2))
         };
     },
 
@@ -26,7 +26,7 @@ module.exports = () => ({
         const amountToPay = dbValueUnitary - inputValue;
         const installmentValue = amountToPay / numberOfInstallments;
 
-        console.log(`SEM JUROS: O valor das parcelas será de ${installmentValue} reais.`);
+        // console.log(`SEM JUROS: O valor das parcelas será de ${installmentValue} reais.`);
 
         return {
             product,

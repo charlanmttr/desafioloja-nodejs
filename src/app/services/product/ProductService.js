@@ -3,8 +3,8 @@ module.exports = ({ productRepository, logger }) => ({
         try {
             return await productRepository.create(data);
         } catch (error) {
-            logger.error(error);
-            throw error;
+            logger.error(error.message);
+            throw error.message;
         }
     },
 
@@ -12,8 +12,8 @@ module.exports = ({ productRepository, logger }) => ({
         try {
             return await productRepository.findPaginated({});
         } catch (error) {
-            logger.error(error);
-            throw error;
+            logger.error(error.message);
+            throw error.message;
         }
     },
 
@@ -21,8 +21,8 @@ module.exports = ({ productRepository, logger }) => ({
         try {
             return await productRepository.findPaginated({ query: finalQuery });
         } catch (error) {
-            logger.error(error);
-            throw error;
+            logger.error(error.message);
+            throw error.message;
         }
     },
 
@@ -30,8 +30,8 @@ module.exports = ({ productRepository, logger }) => ({
         try {
             return await productRepository.get({ _id }, true); 
         } catch (error) {
-            logger.error(error);
-            throw error;
+            logger.error(error.message);
+            throw error.message;
         }
     },
 
@@ -39,8 +39,8 @@ module.exports = ({ productRepository, logger }) => ({
         try {
             return await productRepository.update({ _id }, update);
         } catch (error) {
-            logger.error(error);
-            throw error;
+            logger.error(error.message);
+            throw error.message;
         }
     }
 });

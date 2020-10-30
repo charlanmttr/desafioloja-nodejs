@@ -15,14 +15,15 @@ module.exports = ({ container }) => (err, req, res, next) => {
             ? { stack: err.stack }
             : '';
 
-    const statusCode = err.statusCode || httpConstants.code.INTERNAL_SERVER_ERROR;
-    const errorCode = err.errorCode || 'no_message';
+    const statusCode = err.status_code || httpConstants.code.INTERNAL_SERVER_ERROR;
+    const errorCode = err.error_code || 'no_message';
 
     const errorCustom = {
         message: err.message || httpConstants.message.INTERNAL_SERVER_ERROR,
         status_code: statusCode,
-        // error_code: errorCode,
+        error_code: errorCode,
         details: details || []
     };
+
     return res.status(statusCode).json(Object.assign(errorCustom, options));
 };

@@ -17,6 +17,7 @@
     "web": {
         "port": 4000
     },
+    "appCode": "0",
     "integration": {
         "rest": {
             "testIntegrationMs": {

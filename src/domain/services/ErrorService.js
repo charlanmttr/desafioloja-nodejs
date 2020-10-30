@@ -3,7 +3,6 @@ const { applicationError } = require('src/domain/enum/EnumError');
 class ErrorService {
 
     constructor({ appCode }) {
-
         this.PREFIX_ERROR_CODE = appCode;
     }
 
@@ -34,6 +33,8 @@ class ErrorService {
         error.error_type = applicationError.CONTRACT;
         error.error_code = error.error_code || this._buildErrorCode(error_code, defaultErrorCode);
 
+        error.status_code = 400;
+
         return error;
     }
 
@@ -48,6 +49,8 @@ class ErrorService {
 
         error.error_type = applicationError.NOT_FOUND;
         error.error_code = error.error_code || this._buildErrorCode(error_code, defaultErrorCode);
+
+        error.status_code = 404;
 
         return error;
     }
@@ -64,6 +67,8 @@ class ErrorService {
         error.error_type = applicationError.INTEGRATION;
         error.error_code = error.error_code || this._buildErrorCode(error_code, defaultErrorCode);
 
+        error.status_code = 503;
+
         return error;
     }
 
@@ -78,6 +83,7 @@ class ErrorService {
 
         error.error_type = applicationError.OPERATION;
         error.error_code = error.error_code || this._buildErrorCode(error_code, defaultErrorCode);
+        error.status_code = 500;
 
         return error;
     }
@@ -92,7 +98,6 @@ class ErrorService {
     }
 
     _buildErrorCode(errorCode, defaultErrorCode) {
-
         return `${this.PREFIX_ERROR_CODE}-${errorCode || defaultErrorCode}`;
     }
 

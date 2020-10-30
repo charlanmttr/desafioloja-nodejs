@@ -14,9 +14,11 @@ module.exports = () => ({
             inputValue: joi.number()
                 .min(0)
                 .required()
+                .precision(2)
                 .messages({
                     'number.base': '`inputValue` must be a number',
                     'number.min': '`inputValue` must be greater or equal than 0',
+                    'number.precision': '`inputValue` must have no more than 2 decimal places.',
                     'any.required': '`inputValue` is required'
                 }),
             numberOfInstallments: joi.number()

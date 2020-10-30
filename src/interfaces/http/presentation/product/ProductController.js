@@ -9,7 +9,6 @@ module.exports = opts => ({
     
             return ctx.res.status(opts.httpConstants.code.CREATED).json(product);
         } catch (error) {
-            opts.logger.error(error);
             return ctx.res.status(opts.httpConstants.code.BAD_REQUEST).json({ msg: error });
         }
 
@@ -26,7 +25,6 @@ module.exports = opts => ({
 
             return ctx.res.status(opts.httpConstants.code.OK).json(product);
         } catch (error) {
-            opts.logger.error(error);
             return ctx.res.status(opts.httpConstants.code.BAD_REQUEST).json({ msg: error });
         }
 
@@ -43,7 +41,6 @@ module.exports = opts => ({
 
             return ctx.res.status(opts.httpConstants.code.OK).json(product);
         } catch (error) {
-            opts.logger.error(error);
             return ctx.res.status(opts.httpConstants.code.BAD_REQUEST).json({ msg: error });
         }
 
@@ -60,7 +57,6 @@ module.exports = opts => ({
 
             return ctx.res.status(opts.httpConstants.code.OK).json(product);
         } catch (error) {
-            opts.logger.error(error);
             return ctx.res.status(opts.httpConstants.code.BAD_REQUEST).json({ msg: error });
         }
     })

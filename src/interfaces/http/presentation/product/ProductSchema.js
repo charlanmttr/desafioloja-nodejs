@@ -10,10 +10,12 @@ module.exports = () => ({
                 }),
             valueUnitary: joi.number()
                 .greater(0)
+                .precision(2)
                 .required()
                 .messages({
                     'number.base': '`valueUnitary` must be a number',
                     'number.greater': '`valueUnitary` must be greater than 0',
+                    'number.precision': '`valueUnitary` must have no more than 2 decimal places.',
                     'any.required': '`valueUnitary` is required'
                 }),
             amount: joi.number()
