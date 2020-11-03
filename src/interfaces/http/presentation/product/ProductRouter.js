@@ -18,7 +18,7 @@ module.exports = ({ container }) => {
          *       parameters:
          *       - in: "body"
          *         name: "body"
-         *         description: "Product object that needs to be added to the database"
+         *         description: "Product object to be added to the database"
          *         required: true
          *         type: object
          *         properties:

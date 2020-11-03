@@ -4,30 +4,30 @@ module.exports = () => ({
     create: joi.object().keys({
         product: joi.object().keys({
             name: joi.string()
-                .required()
                 .messages({
                     'any.required': '`name` is required'
-                }),
+                })
+                .required(),
             valueUnitary: joi.number()
                 .greater(0)
                 .precision(2)
-                .required()
                 .messages({
                     'number.base': '`valueUnitary` must be a number',
                     'number.greater': '`valueUnitary` must be greater than 0',
                     'number.precision': '`valueUnitary` must have no more than 2 decimal places.',
                     'any.required': '`valueUnitary` is required'
-                }),
+                })
+                .required(),
             amount: joi.number()
                 .integer()
                 .min(1)
-                .required()
                 .messages({
                     'number.base': '`amount` must be a number',
                     'number.integer': '`amount` must be a integer number',
                     'number.min': '`amount` must be greater or equal than 1',
                     'any.required': '`amount` is required'
-                }),
+                })
+                .required(),
         })
     }),
 
@@ -62,12 +62,12 @@ module.exports = () => ({
     validateId: joi.object().keys({
         id: joi.string()
             .regex(/^[0-9a-fA-F]{24}$/)
-            .required()
             .messages({
                 'string.base': '`id` must be a string',
                 'string.pattern.base': '`id` need be a valid ObjectID',
                 'any.required': '`id` is required'
             })
+            .required(),
     })
 
 });

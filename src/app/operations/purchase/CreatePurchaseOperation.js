@@ -1,7 +1,8 @@
-module.exports = ({ purchaseService, productService, purchaseFactory, logger }) => ({
+module.exports = ({ purchaseService, productService, purchaseDomainService, logger }) => ({
     execute: async body => {
         try {
-            const { product: productid,
+            const {
+                product: productid,
                 paymentCondition: {
                     inputValue,
                     numberOfInstallments
@@ -9,46 +10,24 @@ module.exports = ({ purchaseService, productService, purchaseFactory, logger }) 
             } = body;
 
             const productReceived = await productService.find(productid);
-            if (!productReceived)
-                throw ('product not found');
+            if (!productReceived) throw ('product not found');
 
             const {
                 amount: dbAmount,
-                valueUnitary: dbValueUnitary
+                valueUnitary: dbValueUnitary 
             } = productReceived;
+            if (dbAmount === 0) throw ('product out of stock');
 
-            if (dbAmount === 0)
-                throw ('product out of stock');
-
-            let purchase;
-
-            if (numberOfInstallments > 6) {
-                purchase = purchaseFactory.calculateValueWithInterest(
-                    productid,
-                    dbValueUnitary,
-                    inputValue,
-                    numberOfInstallments
-                );
-
-            } else {
-                purchase = purchaseFactory.calculateValueWithoutInterest(
-                    productid,
-                    dbValueUnitary,
-                    inputValue,
-                    numberOfInstallments
-                );
-            }
-
-            const updateValues = purchaseFactory.productsUpdate(purchase.value);
+            const purchase = purchaseDomainService.verifyInstallments(productid, dbValueUnitary, inputValue, numberOfInstallments);
 
             await Promise.all([
                 purchaseService.create(purchase),
-                productService.purchaseUpdate(productid, updateValues)
+                productService.purchaseUpdate(productid, purchase.value)
             ]);
 
             return purchase;
         } catch (error) {
-            logger.error(error);
+            logger.error(error.message);
             throw error;
         }
     }

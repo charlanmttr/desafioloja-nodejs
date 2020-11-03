@@ -1,32 +1,42 @@
 module.exports = () => ({
 
-    calculateValueWithInterest: (product, dbValueUnitary, inputValue, numberOfInstallments) => {
+    calculateValueWithInterest: (dbValueUnitary, inputValue, numberOfInstallments) => {
         const amountToPay = dbValueUnitary - inputValue;
-        const rate = 2.05;
+        const rate = 2.25;
 
         const amountWithInterest = amountToPay * (1 + (rate / 100)) ** numberOfInstallments;
         const installmentValue = amountWithInterest / numberOfInstallments;
         const totalToPay = amountWithInterest + inputValue;
 
-        console.log(`COM JUROS: O valor da primeira parcela será de ${inputValue} e as ${numberOfInstallments} restantes serão no valor de ${installmentValue.toFixed(2)} reais. Resultando no total de ${totalToPay.toFixed(2)} reais.`);
-
         return {
-            product,
-            paymentCondition: {
-                inputValue,
-                numberOfInstallments
-            },
-            monthlyInterestRate: rate,
-            installmentValue: parseFloat(installmentValue.toFixed(2)),
-            value: parseFloat(totalToPay.toFixed(2))
+            inputValue,
+            numberOfInstallments,
+            installmentValue,
+            totalToPay,
+            rate
         };
     },
 
-    calculateValueWithoutInterest: (product, dbValueUnitary, inputValue, numberOfInstallments) => {
-        const amountToPay = dbValueUnitary - inputValue;
+    calculateValueWithoutInterest: (totalToPay, inputValue, numberOfInstallments) => {
+        const amountToPay = totalToPay - inputValue;
         const installmentValue = amountToPay / numberOfInstallments;
 
-        // console.log(`SEM JUROS: O valor das parcelas será de ${installmentValue} reais.`);
+        return {
+            inputValue,
+            numberOfInstallments,
+            installmentValue,
+            totalToPay
+        };
+    },
+
+    objectFactory: (product, purchase) => {
+        const {
+            inputValue,
+            numberOfInstallments,
+            installmentValue,
+            totalToPay,
+            rate
+        } = purchase;
 
         return {
             product,
@@ -34,18 +44,9 @@ module.exports = () => ({
                 inputValue,
                 numberOfInstallments
             },
-            installmentValue,
-            value: dbValueUnitary
-        };
-    },
-
-    productsUpdate: (value) => {
-        return {
-            $inc: { amount: -1 },
-            $set: {
-                'lastSell.date': new Date(),
-                'lastSell.value': value
-            }
+            monthlyInterestRate: rate || undefined,
+            installmentValue: parseFloat(installmentValue.toFixed(2)),
+            value: parseFloat(totalToPay.toFixed(2))
         };
     }
 });
