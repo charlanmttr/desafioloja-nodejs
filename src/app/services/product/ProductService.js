@@ -17,9 +17,11 @@ module.exports = ({ productRepository, logger }) => ({
         }
     },
 
-    search: async (finalQuery) => {
+    search: async (queryParams) => {
         try {
-            return await productRepository.findPaginated({ query: finalQuery });
+            const query = productRepository.mountSearchQuery(queryParams);
+
+            return await productRepository.findPaginated({ query });
         } catch (error) {
             logger.error(error.message);
             throw error.message;
@@ -28,7 +30,7 @@ module.exports = ({ productRepository, logger }) => ({
 
     find: async (_id) => {
         try {
-            return await productRepository.get({ _id }, true); 
+            return await productRepository.get({ _id }, true);
         } catch (error) {
             logger.error(error.message);
             throw error.message;
@@ -37,7 +39,7 @@ module.exports = ({ productRepository, logger }) => ({
 
     purchaseUpdate: async (_id, value) => {
         try {
-            let query = productRepository.mountUpdateQuery(value);
+            const query = productRepository.mountUpdateQuery(value);
 
             return await productRepository.update({ _id }, query);
         } catch (error) {

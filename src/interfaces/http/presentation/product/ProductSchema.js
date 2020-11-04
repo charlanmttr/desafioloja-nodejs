@@ -34,9 +34,11 @@ module.exports = () => ({
     querySchema: joi.object().keys({
         min_price: joi.number()
             .min(0)
+            .max(50000)
             .messages({
                 'number.base': '`min_price` must be a number',
-                'number.min': '`min_price` must be greater than or equal to 0'
+                'number.min': '`min_price` must be greater than or equal to 0',
+                'number.max': '`min_price` must be less than or equal to 50000'
             }),
         max_price: joi.number()
             .min(0)

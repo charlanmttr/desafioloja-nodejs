@@ -10,7 +10,7 @@ module.exports = class ProductRepository extends Repository {
         this.exception = exception;
     }
 
-    mountUpdateQuery(value){
+    mountUpdateQuery(value) {
         return {
             $inc: { amount: -1 },
             $set: {
@@ -20,4 +20,14 @@ module.exports = class ProductRepository extends Repository {
         };
     }
 
+    mountSearchQuery(query) {
+        const { min_price = 0.01, max_price = 1000000 } = query;
+
+        return {
+            valueUnitary: {
+                $gte: min_price,
+                $lte: max_price,
+            },
+        };
+    }
 };
