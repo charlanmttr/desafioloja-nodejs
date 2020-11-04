@@ -9,4 +9,15 @@ module.exports = class ProductRepository extends Repository {
         });
         this.exception = exception;
     }
+
+    mountUpdateQuery(value){
+        return {
+            $inc: { amount: -1 },
+            $set: {
+                'lastSell.date': new Date(),
+                'lastSell.value': value
+            }
+        };
+    }
+
 };

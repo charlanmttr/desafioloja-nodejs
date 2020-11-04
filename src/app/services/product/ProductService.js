@@ -37,15 +37,9 @@ module.exports = ({ productRepository, logger }) => ({
 
     purchaseUpdate: async (_id, value) => {
         try {
-            let updateQuery = {
-                $inc: { amount: -1 },
-                $set: {
-                    'lastSell.date': new Date(),
-                    'lastSell.value': value
-                }
-            };
+            let query = productRepository.mountUpdateQuery(value);
 
-            return await productRepository.update({ _id }, updateQuery);
+            return await productRepository.update({ _id }, query);
         } catch (error) {
             logger.error(error.message);
             throw error.message;
